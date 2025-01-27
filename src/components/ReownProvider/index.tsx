@@ -1,30 +1,10 @@
 import { createAppKit } from '@reown/appkit/react';
 import { WagmiProvider } from 'wagmi';
-import { arbitrumSepolia } from '@reown/appkit/networks';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
 import {FC, PropsWithChildren} from "react";
+import {wagmiAdapter, networks, metadata, projectId, wagmiConfig} from "../../config";
 
 const queryClient = new QueryClient();
-
-const projectId = import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID;
-
-const metadata = {
-    name: 'MDN Faucet',
-    description: 'AppKit Example',
-    url: 'https://reown.com/appkit',
-    icons: ['https://assets.reown.com/reown-profile-pic.png']
-};
-
-const networks = [arbitrumSepolia];
-
-const wagmiAdapter = new WagmiAdapter({
-    networks,
-    projectId,
-    ssr: false
-});
-
-const wagmiConfig = wagmiAdapter.wagmiConfig;
 
 createAppKit({
     adapters: [wagmiAdapter],
