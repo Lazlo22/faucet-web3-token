@@ -1,7 +1,7 @@
 import {FC, useEffect} from "react";
 import { useAppKit, useAppKitAccount } from '@reown/appkit/react';
 import { useBalance } from 'wagmi';
-import {TOKEN_BALANCE_REFETCH_INTERVAL} from "../../../constants";
+import {TOKEN_BALANCE_REFETCH_INTERVAL, tokenAddress} from "../../../constants";
 
 const ConnectWalletButton: FC = () => {
     const { open } = useAppKit();
@@ -9,7 +9,7 @@ const ConnectWalletButton: FC = () => {
 
     const { data, refetch } = useBalance({
         address,
-        token: import.meta.env.VITE_TOKEN_ADDRESS
+        token: tokenAddress
     });
 
     const handleConnectWalletClick = () => {
