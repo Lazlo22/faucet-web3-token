@@ -1,16 +1,37 @@
-import {FC} from "react";
+import {FC, useEffect} from "react";
 import { useAppKit, useAppKitAccount } from '@reown/appkit/react';
+import { useBalance } from 'wagmi';
+import {TOKEN_BALANCE_REFETCH_INTERVAL} from "../../../constants";
 
 const ConnectWalletButton: FC = () => {
     const { open } = useAppKit();
     const { address, isConnected } = useAppKitAccount();
 
+    const { data, refetch } = useBalance({
+        address,
+        token: import.meta.env.VITE_TOKEN_ADDRESS
+    });
+
+    const handleConnectWalletClick = () => {
+        open({ view: isConnected ? 'Account' : 'Connect' });
+    };
+
+    useEffect(() => {
+        let intervalId;
+
+        if (address) intervalId = setInterval(refetch, TOKEN_BALANCE_REFETCH_INTERVAL);
+
+        return () => {
+            if (intervalId) clearInterval(intervalId);
+        };
+    }, [address, refetch]);
+
     return (
-        <div className="bg-white hover:bg-gray-200 rounded-2xl py-3 px-5 cursor-pointer" onClick={open}>
-            <span className="text-black font-semibold">
-                {isConnected && address ? `${address.substring(0, 5)}...${address.substring(39)} / 12 MDN` : 'Connect Wallet'}
+        <button className="bg-white hover:bg-gray-200 rounded-2xl py-3 px-5 cursor-pointer transform enabled:active:scale-[0.8] transition-transform" onClick={handleConnectWalletClick}>
+            <span className="text-black font-semibold cursor-pointer">
+                {isConnected && address ? `${address.substring(0, 5)}...${address.substring(39)} / ${data?.formatted ?? 0} MDN` : 'Connect Wallet'}
             </span>
-        </div>
+        </button>
     );
 };
 
