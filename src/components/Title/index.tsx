@@ -6,15 +6,16 @@ import {MIDNIGHT_TOKEN_FAUCET_ABI} from "../../contracts/abi/MidnightTokenFaucet
 import {MIDNIGHT_TOKEN_ABI} from "../../contracts/abi/MidnightToken";
 import {formatNumber} from "../../utils/formatter";
 import useInterval from "../../hooks/useInterval";
+import Spinner from "../../icons/Spinner";
 
 const Title: FC = () => {
-    const {data: tokenDecimals} = useReadContract({
+    const {data: tokenDecimals, isLoading: isLoadingTokenDecimals} = useReadContract({
         abi: MIDNIGHT_TOKEN_ABI,
         address: tokenAddress,
         functionName: 'decimals',
     });
 
-    const {data: faucetBalance, refetch} = useReadContract({
+    const {data: faucetBalance, refetch, isLoading: isLoadingFaucetBalance} = useReadContract({
         abi: MIDNIGHT_TOKEN_FAUCET_ABI,
         address: faucetAddress,
         functionName: 'faucetBalance',
@@ -31,12 +32,17 @@ const Title: FC = () => {
     }, [tokenDecimals, faucetBalance]);
 
     return (
-        <div className="text-white text-6xl font-bold flex flex-col gap-6">
-            <h2>Faucet</h2>
-            <h3 className="text-2xl font-semibold">Fast and reliable | 500 MDN/day</h3>
-            <h3 className="text-2xl font-semibold">
-                Faucet balance: {formattedBalance} MDN
-            </h3>
+        <div className="text-white text-2xl font-semibold flex flex-col gap-6">
+            <h2 className="text-6xl font-bold">Faucet</h2>
+            <h3>Fast and reliable | 500 MDN/day</h3>
+            <div className="flex items-center justify-center gap-2">
+                <h3>Faucet balance: </h3>
+                {isLoadingFaucetBalance && isLoadingTokenDecimals ? (
+                    <Spinner className="size-6" />
+                ) : (
+                    <span>{formattedBalance} MDN</span>
+                )}
+            </div>
         </div>
     );
 };

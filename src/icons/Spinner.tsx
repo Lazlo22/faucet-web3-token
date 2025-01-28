@@ -1,8 +1,12 @@
 import {FC} from "react";
 
-const Spinner: FC = () => {
+interface SpinnerProps {
+    className: string;
+}
+
+const Spinner: FC<SpinnerProps> = ({className}) => {
     return (
-        <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+        <svg className={className} viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
             <g fill="none" fillRule="evenodd">
                 <g transform="translate(1 1)" strokeWidth="2">
                     <circle strokeOpacity=".5" cx="18" cy="18" r="18"/>

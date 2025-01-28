@@ -33,7 +33,7 @@ const FaucetForm: FC<FaucetFormProps> = ({isPending, handleGetTokens}) => {
                     className="text-white bg-black enabled:hover:bg-black/[0.85] outline-none transform enabled:active:scale-[0.8] transition-transform font-semibold rounded-lg text-lg w-auto px-5 disabled:opacity-50"
                     disabled={!isAddress(userAddress)}
                 >
-                    {isPending ? <Spinner /> : <span>Claim</span>}
+                    {isPending ? <Spinner className="size-8" /> : <span>Claim</span>}
                 </button>
             </div>
         </form>
