@@ -17,8 +17,7 @@ const Faucet: FC = () => {
         writeContract({
             abi: MIDNIGHT_TOKEN_FAUCET_ABI,
             address: faucetAddress,
-            // TODO: rename fake method
-            functionName: 'abc'
+            functionName: 'claimTokens'
         });
     };
 
