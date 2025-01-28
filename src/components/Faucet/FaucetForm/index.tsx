@@ -1,11 +1,14 @@
 import {ChangeEvent, FC, FormEvent, useState} from "react";
-import { isAddress } from "viem";
+import {Address, isAddress} from "viem";
+import {FaucetFormProps} from "./interfaces";
+import Spinner from "../../../icons/Spinner";
 
-const FaucetForm: FC = () => {
+const FaucetForm: FC<FaucetFormProps> = ({isPending, handleGetTokens}) => {
     const [userAddress, setUserAddress] = useState<string>('');
 
     const handleSubmitFaucet = (e: FormEvent) => {
         e.preventDefault();
+        handleGetTokens(userAddress as Address);
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +33,7 @@ const FaucetForm: FC = () => {
                     className="text-white bg-black enabled:hover:bg-black/[0.85] outline-none transform enabled:active:scale-[0.8] transition-transform font-semibold rounded-lg text-lg w-auto px-5 disabled:opacity-50"
                     disabled={!isAddress(userAddress)}
                 >
-                    Get Tokens
+                    {isPending ? <Spinner /> : <span>Claim</span>}
                 </button>
             </div>
         </form>
