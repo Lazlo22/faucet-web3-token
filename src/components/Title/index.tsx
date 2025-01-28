@@ -1,10 +1,11 @@
 import {FC, useMemo} from "react";
 import {useReadContract} from "wagmi";
 import {formatUnits} from "viem";
-import {faucetAddress, tokenAddress} from "../../constants";
+import {FAUCET_BALANCE_REFETCH_INTERVAL, faucetAddress, tokenAddress} from "../../constants";
 import {MIDNIGHT_TOKEN_FAUCET_ABI} from "../../contracts/abi/MidnightTokenFaucet";
 import {MIDNIGHT_TOKEN_ABI} from "../../contracts/abi/MidnightToken";
 import {formatNumber} from "../../utils/formatter";
+import useInterval from "../../hooks/useInterval";
 
 const Title: FC = () => {
     const {data: tokenDecimals} = useReadContract({
@@ -13,11 +14,13 @@ const Title: FC = () => {
         functionName: 'decimals',
     });
 
-    const {data: faucetBalance} = useReadContract({
+    const {data: faucetBalance, refetch} = useReadContract({
         abi: MIDNIGHT_TOKEN_FAUCET_ABI,
         address: faucetAddress,
         functionName: 'faucetBalance',
     });
+
+    useInterval(refetch, FAUCET_BALANCE_REFETCH_INTERVAL);
 
     const formattedBalance = useMemo(() => {
         if (!tokenDecimals || !faucetBalance) return 0;
