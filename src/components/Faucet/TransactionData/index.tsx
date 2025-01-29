@@ -19,7 +19,7 @@ const TransactionData: FC<TransactionDataProps> = ({txHash}) => {
                     >
                         {txHash}
                     </a>
-                ) : <span>Empty</span>}
+                ) : <span>—</span>}
             </div>
         </div>
     );
