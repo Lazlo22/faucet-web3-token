@@ -1,8 +1,8 @@
 # ERC-20 Token Faucet Example
 ## This app demonstrates interaction with Ethereum-compatible chains using `wagmi` and `viem` libraries
+### [Demo](https://faucet-web3-token.onrender.com/)
 ### In the app used `Sepolia` network
 
-[comment]: <> (### [Demo]&#40;https://google.com/&#41;)
 <hr/>
 
 ### Build using Vite
@@ -21,7 +21,6 @@
 <hr/>
 
 ## Resources
-<hr/>
 
 #### • [React](https://reactjs.org/docs/getting-started.html)
 #### • [Vite](https://vitejs.dev/guide/)
