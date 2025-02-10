@@ -26,9 +26,9 @@ const Title: FC = () => {
     const formattedBalance = useMemo(() => {
         if (!tokenDecimals || !faucetBalance) return 0;
 
-        const ethersFormattedBalance = formatUnits(faucetBalance, tokenDecimals);
+        const ethersFormattedBalance = formatUnits(faucetBalance as bigint, tokenDecimals as number);
 
-        return formatNumber(Number(ethersFormattedBalance));
+        return formatNumber(ethersFormattedBalance);
     }, [tokenDecimals, faucetBalance]);
 
     return (

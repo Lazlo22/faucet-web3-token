@@ -1,5 +1,5 @@
-export function formatNumber(value: number) {
+export function formatNumber(value: string) {
     const formatter = new Intl.NumberFormat();
 
-    return formatter.format(value);
+    return formatter.format(Number(value));
 }
